@@ -1,5 +1,6 @@
 package com.example.social_x;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,14 +9,26 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.widget.Toolbar;
+
 
 import com.example.social_x.Model.Opening_hours;
 import com.example.social_x.Model.PlaceDetail;
 import com.example.social_x.Remote.IGoogleAPIService;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,6 +46,16 @@ public class ViewPlace extends AppCompatActivity {
     IGoogleAPIService API_Service;
 
     PlaceDetail Place;
+
+    EditText addcomment;
+    ImageView image_profile;
+    TextView post;
+
+    String postid;
+    String published;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +130,67 @@ public class ViewPlace extends AppCompatActivity {
 
                     }
                 });
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Comments");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        addcomment = findViewById(R.id.add_comment);
+        image_profile = findViewById(R.id.image_profile);
+        post = findViewById(R.id.post);
+
+        Intent intent = getIntent();
+        postid = intent.getStringExtra("postid");
+
+        post.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (addcomment.getText().toString().equals("")){
+                    Toast.makeText(ViewPlace.this, "You cannot post empty comments", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    addComment();
+                }
+            }
+        });
+
+
     }
+
+    private void addComment() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Comments").child(postid);
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("comment", addcomment.getText().toString());
+        reference.push().setValue(hashMap);
+        addcomment.setText("");
+    }
+
+    private void getComments(String postid, final TextView comments) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Comments").child(postid);
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                comments.setText("View All" + dataSnapshot.getChildrenCount() + " Comments");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+
 
     private String getPlaceDetailUrl(String place_id) {
 
@@ -124,4 +207,6 @@ public class ViewPlace extends AppCompatActivity {
         url.append("&key="+getResources().getString(R.string.browser_key));
         return url.toString();
     }
+
+
 }
