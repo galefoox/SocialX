@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Social_X</string>
+    <string name="title_activity_maps">Social_X</string>
+    <string name="Market">Supermarket</string>
+    <string name="Emergency_Room">Emergency Room</string>
+    <string name="Food">Food</string>
+    <string name="place_name">Place Name</string>
+    <string name="place_address">Place Address</string>
+    <string name="hours_open">Open :</string>
+    <string name="show_on_map">Show On Map</string>
+</resources>
