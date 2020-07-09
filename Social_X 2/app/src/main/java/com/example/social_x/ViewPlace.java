@@ -28,6 +28,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.util.HashMap;
 
 import retrofit2.Call;
@@ -131,6 +133,11 @@ public class ViewPlace extends AppCompatActivity {
                     }
                 });
 
+        //FirebaseDatabase database = FirebaseDatabase.getInstance();
+        //final DatabaseReference myRef = database.getReference("message");
+
+        //myRef.setValue("");
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Comments");
@@ -144,11 +151,11 @@ public class ViewPlace extends AppCompatActivity {
         });
 
         addcomment = findViewById(R.id.add_comment);
-        image_profile = findViewById(R.id.image_profile);
+        //image_profile = findViewById(R.id.image_profile);
         post = findViewById(R.id.post);
 
-        Intent intent = getIntent();
-        postid = intent.getStringExtra("postid");
+        //Intent intent = getIntent();
+        //postid = intent.getStringExtra("postid");
 
         post.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,7 +164,17 @@ public class ViewPlace extends AppCompatActivity {
                     Toast.makeText(ViewPlace.this, "You cannot post empty comments", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    addComment();
+
+
+                    //myRef.setValue(addcomment.getText().toString());
+                    //addComment();
+                    EditText editText = (EditText) findViewById(R.id.add_comment);
+                    TextView post = (TextView) findViewById((R.id.comment_text));
+
+                    post.setText((CharSequence)editText.getText());
+                    editText.setVisibility(View.INVISIBLE);
+                    //view.setVisibility(8);
+                    post.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -165,13 +182,34 @@ public class ViewPlace extends AppCompatActivity {
 
     }
 
-    private void addComment() {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Comments").child(postid);
 
-        HashMap<String, Object> hashMap = new HashMap<>();
+    private void addComment(View view) {
+        //DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Comments").child(postid);
+
+        /*HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("comment", addcomment.getText().toString());
-        reference.push().setValue(hashMap);
-        addcomment.setText("");
+        //reference.push().setValue(hashMap);
+        addcomment.setText("");*/ //karls code
+
+
+        //FirebaseDatabase database = FirebaseDatabase.getInstance();
+        //DatabaseReference myRef = database.getReference("message");
+
+        //myRef.setValue(s);
+        //return myRef; //my fail attempt
+
+        EditText editText = (EditText) this.findViewById(R.id.add_comment);
+        TextView post = (TextView) this.findViewById((R.id.post));
+
+        post.setText((CharSequence)editText.getText());
+        editText.setVisibility(8);
+        view.setVisibility(8);
+
+
+
+
+
+
     }
 
     private void getComments(String postid, final TextView comments) {

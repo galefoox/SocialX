@@ -79,35 +79,48 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/bottom"
                 android:background="#fff"
-                android:padding="4dp"
-                android:layout_alignParentBottom="true">
+                android:padding="4dp">
 
                 <ImageView
+                    android:id="@+id/image_profile"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:id="@+id/image_profile"/>
+                    android:contentDescription="@string/image_profile" />
 
                 <EditText
+                    android:id="@+id/add_comment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/image_profile"
-                    android:hint="Add a comment..."
-                    android:id="@+id/add_comment"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
+                    android:layout_toStartOf="@id/post"
+                    android:layout_toEndOf="@id/image_profile"
+                    android:autoText="false"
                     android:background="@android:color/transparent"
-                    android:layout_toLeftOf="@id/post"/>
+                    android:hint="@string/add_a_comment"
+                    android:inputType="textLongMessage" />
                 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/post"
-                    android:text="POST"
+                    android:text="@string/POST"
                     android:layout_marginEnd="5dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:textColor="@color/colorPrimary"/>
+
+                <TextView
+                    android:id="@+id/comment_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF"
+                    android:paddingBottom="16dp"
+                    android:text=""
+                    android:textAlignment="textStart"
+                    android:textSize="20sp"
+                    android:visibility="gone" />
 
             </RelativeLayout>
 

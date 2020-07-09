@@ -8,4 +8,7 @@
     <string name="place_address">Place Address</string>
     <string name="hours_open">Open :</string>
     <string name="show_on_map">Show On Map</string>
+    <string name="POST">POST</string>
+    <string name="add_a_comment">Add a comment...</string>
+    <string name="image_profile">image_profile</string>
 </resources>
